@@ -1,0 +1,27 @@
+import { RouteConfig } from 'vue-router'
+import Layout from '@/layout/index.vue'
+
+const --class--: RouteConfig = {
+  path: '/&router&',
+  component: Layout,
+  // redirect: 'noredirect',
+  // name: '&comp&',
+  // meta: {
+  //   title: '&router&',
+  //   icon: ''
+  // },
+  children: [
+    {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "&router&" */ '@/views/&router&/index.vue'),
+        name: '&comp&',
+        meta: {
+          title: '&router&',
+          icon: 'icon',
+          noCache: true
+        }
+      },
+  ]
+}
+
+export default --class--

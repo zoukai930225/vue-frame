@@ -1,0 +1,6 @@
+.&class& {
+    border-radius: 5px;
+    background-color: #fff;
+    margin-top: 16px;
+
+}

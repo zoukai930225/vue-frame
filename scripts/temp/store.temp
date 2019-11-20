@@ -1,0 +1,133 @@
+import store from '@/store'
+import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+
+export interface &state& {
+  data:string
+}
+
+@Module({ dynamic: true, store, name: '--class--' })
+class &comp& extends VuexModule implements &state& {
+  public data = ''
+
+  // @Mutation
+  // private SET_TOKEN(token: string) {
+  //   this.token = token
+  // }
+
+  // @Action
+  // public async Login(userInfo: { username: string, password: string}) {
+  //   let { username, password } = userInfo
+  //   username = username.trim()
+  //   const { data } = await login({ username, password })
+  //   setToken(data.accessToken)
+  //   this.SET_TOKEN(data.accessToken)
+  // }
+
+}
+
+export const &class& = getModule(&comp&)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { action, computed, observable } from 'mobx';
+import {  http } from '../utils';
+import { message } from 'antd';
+
+export class Item {
+    @observable test: string = "";
+    @observable status: string = "0"
+}
+
+export class --class-- {
+
+    @observable tableData: Item[] = [];
+    @observable loading: boolean = false;
+    @observable currItem: Item = new Item();
+    @observable key: string = '';
+    
+    // 分页配置
+    @observable paging = {
+        current: 1,
+        total: 0,
+        size: 10,
+        onChange: (page: number) => {
+            this.paging.current = page;
+            this.getData(page);
+        }
+    }
+
+    @computed get list(){
+        return this.tableData.map( (it, index) => ({ ...it, index: index+1, key: index }) )
+    }
+    @action search=(t: any, l: any)=>{
+        this.key = t;// 搜索关键字
+       // this.UserState = l[0].check; // 额外选项
+        this.paging.current = 1;
+        this.getData();
+    }
+    @action async getData(page: number = this.paging.current){
+        this.loading = true;
+        const res = await http.getRaw(
+            `example-api`,
+            {
+                PageIndex: page,
+                PageSize: 10,
+                SearchContent: this.key
+            }
+        );
+        this.loading = false;
+        if( res.ResultCode !== 0 ) {
+            message.error(res.ResultInfo);
+            return;
+        }
+        // this.tableData = data as any; 表单数据
+        // this.paging.total = data.resultCount;  表格分页数据总数
+    }
+
+}
+
+export const &store& = new --class--();
